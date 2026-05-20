@@ -1,0 +1,82 @@
+format_version: 10
+
+pipelines:
+  react-app-pipeline:
+    group: demo-group
+    label_template: "${COUNT}"
+
+    materials:
+      github_repo:
+        git: "https://github.com/meetbikhani/gocd_trial.git"
+        branch: main
+        auto_update: true
+
+    stages:
+
+      # ======================
+      # 1. LINT STAGE
+      # ======================
+      - lint:
+          jobs:
+            lint-job:
+              tasks:
+                - exec:
+                    command: npm
+                    arguments:
+                      - install
+
+                - exec:
+                    command: npm
+                    arguments:
+                      - run
+                      - lint
+
+
+      # ======================
+      # 2. BUILD STAGE
+      # ======================
+      - build:
+          jobs:
+            build-job:
+              tasks:
+                - exec:
+                    command: npm
+                    arguments:
+                      - install
+
+                - exec:
+                    command: npm
+                    arguments:
+                      - run
+                      - build
+
+                - exec:
+                    command: docker
+                    arguments:
+                      - build
+                      - -t
+                      - meetbikhani/jenkins_trial:v${GO_PIPELINE_COUNTER}
+                      - .
+
+
+      # ======================
+      # 3. DEPLOY STAGE
+      # ======================
+      - deploy:
+          jobs:
+            deploy-job:
+              tasks:
+                - exec:
+                    command: docker
+                    arguments:
+                      - login
+                      - -u
+                      - YOUR_DOCKERHUB_USERNAME
+                      - -p
+                      - YOUR_DOCKERHUB_PASSWORD
+
+                - exec:
+                    command: docker
+                    arguments:
+                      - push
+                      - meetbikhani/jenkins_trial:v${GO_PIPELINE_COUNTER}
