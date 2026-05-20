@@ -36,12 +36,10 @@ pipelines:
                     arguments: ["run", "build"]
 
                 - exec:
-                    command: docker
+                    command: sh
                     arguments:
-                      - build
-                      - -t
-                      - meetbikhani/jenkins_trial:v$GO_PIPELINE_COUNTER
-                      - .
+                      - -c
+                      - docker build -t meetbikhani/jenkins_trial:v${GO_PIPELINE_COUNTER} .
 
       - deploy:
           jobs:
@@ -57,7 +55,7 @@ pipelines:
                       - YOUR_DOCKERHUB_PASSWORD
 
                 - exec:
-                    command: docker
+                    command: sh
                     arguments:
-                      - push
-                      - meetbikhani/jenkins_trial:v${GO_PIPELINE_COUNTER}
+                      - -c
+                      - docker push meetbikhani/jenkins_trial:v${GO_PIPELINE_COUNTER}
