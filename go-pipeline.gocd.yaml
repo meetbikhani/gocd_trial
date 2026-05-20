@@ -46,10 +46,10 @@ pipelines:
             deploy-job:
               tasks:
                 - exec:
-              command: sh
-              arguments:
-                - -c
-                - echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+                    command: sh
+                    arguments:
+                      - -c
+                      - echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
 
                 - exec:
                     command: sh
