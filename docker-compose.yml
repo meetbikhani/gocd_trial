@@ -9,7 +9,9 @@ services:
       - gocd-server-data:/godata
 
   gocd-agent:
-    image: gocd/gocd-agent-ubuntu-22.04:v25.4.0
+    build:
+      context: .
+      dockerfile: Dockerfile.agent
     container_name: gocd-agent
     depends_on:
       - gocd-server
