@@ -50,9 +50,9 @@ pipelines:
                     arguments:
                       - login
                       - -u
-                      - YOUR_DOCKERHUB_USERNAME
+                      - "{{SECRET:[dockerhub][username]}}"
                       - -p
-                      - YOUR_DOCKERHUB_PASSWORD
+                      - "{{SECRET:[dockerhub][token]}}"
 
                 - exec:
                     command: sh
