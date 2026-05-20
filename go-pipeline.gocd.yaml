@@ -5,11 +5,6 @@ pipelines:
     group: gocd_trial   
     label_template: "${COUNT}"
 
-    materials:
-      github_repo:
-        git: "https://github.com/meetbikhani/gocd_trial.git"
-        branch: main
-
     stages:
 
       # ======================
