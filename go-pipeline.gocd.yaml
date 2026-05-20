@@ -42,6 +42,9 @@ pipelines:
                       - docker build -t meetbikhani/jenkins_trial:v${GO_PIPELINE_COUNTER} .
 
       - deploy:
+          approval:
+            type: manual
+            
           jobs:
             deploy-job:
               tasks:
