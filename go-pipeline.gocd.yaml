@@ -2,47 +2,38 @@ format_version: 10
 
 pipelines:
   react-app-pipeline:
-    group: gocd_trial   
+    group: gocd_trial
     label_template: "${COUNT}"
 
-    stages:
+    materials:
+      git_repo:
+        git: https://github.com/meetbikhani/gocd_trial.git
+        branch: main
 
-      # ======================
-      # 1. LINT STAGE
-      # ======================
+    stages:
       - lint:
           jobs:
             lint-job:
               tasks:
                 - exec:
                     command: npm
-                    arguments:
-                      - install
+                    arguments: ["install"]
 
                 - exec:
                     command: npm
-                    arguments:
-                      - run
-                      - lint
+                    arguments: ["run", "lint"]
 
-
-      # ======================
-      # 2. BUILD STAGE
-      # ======================
       - build:
           jobs:
             build-job:
               tasks:
                 - exec:
                     command: npm
-                    arguments:
-                      - install
+                    arguments: ["install"]
 
                 - exec:
                     command: npm
-                    arguments:
-                      - run
-                      - build
+                    arguments: ["run", "build"]
 
                 - exec:
                     command: docker
@@ -52,10 +43,6 @@ pipelines:
                       - meetbikhani/jenkins_trial:v${GO_PIPELINE_COUNTER}
                       - .
 
-
-      # ======================
-      # 3. DEPLOY STAGE
-      # ======================
       - deploy:
           jobs:
             deploy-job:
