@@ -5,6 +5,9 @@ services:
     ports:
       - "8153:8153"
       - "8154:8154"
+    environment:
+      DOCKERHUB_USERNAME: ${DOCKERHUB_USERNAME}
+      DOCKERHUB_TOKEN: ${DOCKERHUB_TOKEN}
     volumes:
       - gocd-server-data:/godata
 
@@ -17,6 +20,8 @@ services:
       - gocd-server
     environment:
       GO_SERVER_URL: http://gocd-server:8153/go
+      DOCKERHUB_USERNAME: ${DOCKERHUB_USERNAME}
+      DOCKERHUB_TOKEN: ${DOCKERHUB_TOKEN}
     privileged: true
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
