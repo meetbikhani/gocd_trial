@@ -40,7 +40,7 @@ pipelines:
                     arguments:
                       - build
                       - -t
-                      - meetbikhani/jenkins_trial:v${GO_PIPELINE_COUNTER}
+                      - meetbikhani/jenkins_trial:v$GO_PIPELINE_COUNTER
                       - .
 
       - deploy:
